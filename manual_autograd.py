@@ -4,11 +4,14 @@
 
 import numpy as np
 
+# 1. variable definition
 x1 = 1.0
 x1_node = {"requires_grad": True, "grad": 0, "backward_branches": []}
 x2 = np.pi / 4
 x2_node = {"requires_grad": True, "grad": 0, "backward_branches": []}
 
+
+# 2. forward propagation
 y1 = 2 * x1
 y1_node = {
     "requires_grad": True,
@@ -24,7 +27,6 @@ y2_node = {
         {"previous_node": x2_node, "f_grad": x1 * np.cos(x2)},
     ],
 }
-
 z = y1 + y2
 z_node = {
     "requires_grad": True,
@@ -36,6 +38,7 @@ z_node = {
 }
 
 
+# 3. backward propagation
 def backward(node, grad=1):
 
     if node["requires_grad"]:
@@ -51,6 +54,7 @@ def backward(node, grad=1):
 
 backward(z_node)
 
-# 可視化
+
+# 4. visualization
 print(x1_node["grad"])
 print(x2_node["grad"])
